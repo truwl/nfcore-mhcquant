@@ -1,0 +1,503 @@
+parameter_meta:
+  mhcquant.samplesheet:
+    description: Input raw / mzML files listed in a tsv file (see help for details)
+    group: input_output_options
+    help: 'Use this to specify a sample sheet table including your input raw or mzml
+      files as well as their meta information such as SampleID and Condition. For
+      example:
+
+
+      | ID   | Sample      | Condition  |   ReplicateFileName                       |
+
+      | -----|:------------:| ----------:|------------------------------------------:|
+
+      | 1    | MM15_Melanom |      A     |   data/MM15_Melanom_W_1_A_standard.raw    |
+
+      | 2    | MM15_Melanom |      B     |   data/MM15_Melanom_W_1_B_standard.raw    |
+
+      | 3    | MM17_Melanom |      B     |   data/MM17_Melanom_W_1_B_standard.raw    |
+
+
+      ```bash
+
+      --input ''path/samples.tsv''
+
+      ```'
+    hidden: false
+  mhcquant.outdir:
+    description: Path to the output directory where the results will be saved.
+    group: input_output_options
+    help: ''
+    hidden: false
+  mhcquant.email:
+    description: Email address for completion summary.
+    group: input_output_options
+    help: Set this parameter to your e-mail address to get a summary e-mail with details
+      of the run sent to you when the workflow exits. If set in your user config file
+      (`~/.nextflow/config`) then you don't need to specify this on the command line
+      for every run.
+    hidden: false
+  mhcquant.multiqc_title:
+    description: MultiQC report title. Printed as page header, used for filename if
+      not otherwise specified.
+    group: input_output_options
+    help: ''
+    hidden: false
+  mhcquant.fasta:
+    description: Input FASTA protein database
+    group: database_options
+    help: If you have no genome reference available, the pipeline can build one using
+      a FASTA file. This requires additional time and resources, so it's better to
+      use a pre-build index if possible.
+    hidden: false
+  mhcquant.include_proteins_from_vcf:
+    description: Set depending on whether variants should be translated to proteins
+      and included into your fasta for database search.
+    group: database_options
+    help: ''
+    hidden: false
+  mhcquant.skip_decoy_generation:
+    description: Set depending on whether own decoy database should be used
+    group: database_options
+    help: 'If you want to use your own decoys, you can specify a dataset that includes
+      decoy sequences. However, each database entry should keep the prefix ''DECOY_''.
+
+      One should consider though that this option will then prevent to append variants
+      to the database and if not using reversed decoys the subset refinement FDR option
+      will not work.'
+    hidden: false
+  mhcquant.pick_ms_levels:
+    description: If one ms level in the raw ms data is not centroided, specify the
+      level here. (eg. 2)
+    group: preprocessing
+    help: ''
+    hidden: false
+  mhcquant.run_centroidisation:
+    description: Choose whether the specified ms_level in pick_ms_levels is centroided
+      or not.
+    group: preprocessing
+    help: ''
+    hidden: false
+  mhcquant.peptide_min_length:
+    description: Specify the minimum length of peptides considered after processing
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.peptide_max_length:
+    description: Specify the maximum length of peptides considered after processing
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.fragment_mass_tolerance:
+    description: Specify the fragment mass tolerance used for the comet database search.
+    group: mass_spectrometry_data_processing
+    help: 'For High-Resolution instruments a fragment mass tolerance value of 0.02
+      is recommended. (See the Comet parameter documentation: eg. 0.02)'
+    hidden: false
+  mhcquant.precursor_mass_tolerance:
+    description: Specify the precursor mass tolerance used for the comet database
+      search.
+    group: mass_spectrometry_data_processing
+    help: ' For High-Resolution instruments a precursor mass tolerance value of 5ppm
+      is recommended. (eg. 5)'
+    hidden: false
+  mhcquant.fragment_bin_offset:
+    description: Specify the fragment bin offset used for the comet database search.
+    group: mass_spectrometry_data_processing
+    help: 'For High-Resolution instruments a fragment bin offset of 0 is recommended.
+      (See the Comet parameter documentation: eg. 0)'
+    hidden: false
+  mhcquant.number_mods:
+    description: Specify the maximum number of modifications that should be contained
+      in a peptide sequence match.
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.num_hits:
+    description: Specify the number of hits that should be reported for each spectrum.
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.digest_mass_range:
+    description: Specify the mass range that peptides should fulfill to be considered
+      for peptide spectrum matching.
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.prec_charge:
+    description: Specify the precursor charge range that peptides should fulfill to
+      be considered for peptide spectrum matching.
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.activation_method:
+    description: Specify which fragmentation method was used in the MS acquisition
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.enzyme:
+    description: Specify which enzymatic restriction should be applied
+    group: mass_spectrometry_data_processing
+    help: ' for HLA peptides rarely other enzymes are used, however most enzymes such
+      as for example ''Trypsin'' are available (see OpenMS enzymes)'
+    hidden: true
+  mhcquant.max_rt_alignment_shift:
+    description: Set a maximum retention time shift for the linear rt alignment
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.fixed_mods:
+    description: Specify which fixed modifications should be applied to the database
+      search
+    group: mass_spectrometry_data_processing
+    help: e.g. 'Carbamidomethyl (C)' (see OpenMS modifications)
+    hidden: false
+  mhcquant.variable_mods:
+    description: Specify which variable modifications should be applied to the database
+      search
+    group: mass_spectrometry_data_processing
+    help: e.g. 'Oxidation (M)' (see OpenMS modifications)
+    hidden: false
+  mhcquant.use_x_ions:
+    description: Include x ions into the peptide spectrum matching
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.use_z_ions:
+    description: Include z ions into the peptide spectrum matching
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.use_a_ions:
+    description: Include a ions into the peptide spectrum matching
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.use_c_ions:
+    description: Include c ions into the peptide spectrum matching
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.use_NL_ions:
+    description: Include NL ions into the peptide spectrum matching
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.remove_precursor_peak:
+    description: Include precursor ions into the peptide spectrum matching
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.spectrum_batch_size:
+    description: Size of Spectrum batch for Comet processing (Decrease/Increase depending
+      on Memory Availability)
+    group: mass_spectrometry_data_processing
+    help: ''
+    hidden: false
+  mhcquant.vcf_sheet:
+    description: Specify a .tsv file containing the information about genomic variants
+      (vcf files < v.4.2) for each sample.
+    group: mass_spectrometry_data_processing
+    help: '| Sample      | VCF_FileName           |
+
+      | -------------| :---------------------:|
+
+      | MM15_Melanom | data/MM15_variants.vcf |
+
+      | MM17_Melanom | data/MM17_variants.vcf |'
+    hidden: false
+  mhcquant.fdr_level:
+    description: Specify the level at which the false discovery rate should be computed.
+    group: fdr_scoring
+    help: ''
+    hidden: false
+  mhcquant.fdr_threshold:
+    description: Specify the false discovery rate threshold at which peptide hits
+      should be selected.
+    group: fdr_scoring
+    help: ''
+    hidden: false
+  mhcquant.refine_fdr_on_predicted_subset:
+    description: Set if MHCquant should be run in SubsetFDR mode
+    group: fdr_scoring
+    help: SubsetFDR makes use of binding predictions applying the tool mhcflurry to
+      subset all PSMs not passing the q-value threshold. If specified the FDR will
+      be refined using Percolator on the subset of predicted binders among all PSMs
+      resulting in an increased identification rate. (Please be aware that this option
+      is only available for MHC class I data of alleles that are supported by mhcflurry)
+    hidden: false
+  mhcquant.subset_affinity_threshold:
+    description: Affinity threshold (nM) used to define binders for PSM subset selection
+      in the FDR refinement procedure
+    group: fdr_scoring
+    help: ''
+    hidden: false
+  mhcquant.description_correct_features:
+    description: Specify percolator descriptor feature set
+    group: fdr_scoring
+    help: See percolator description (https://github.com/percolator/percolator/wiki/Retention-time-and-calibration)
+    hidden: false
+  mhcquant.klammer:
+    description: Use klammer retention time features for Percolator rescoring
+    group: fdr_scoring
+    help: https://pubs.acs.org/doi/10.1021/ac070262k
+    hidden: false
+  mhcquant.subset_max_train:
+    description: Maximum subset for percolator training iterations
+    group: fdr_scoring
+    help: ''
+    hidden: false
+  mhcquant.skip_quantification:
+    description: Skip quantification and only yield peptide identifications
+    group: quantification_options
+    help: ''
+    hidden: false
+  mhcquant.quantification_fdr:
+    description: Compute FDR for the targeted approach
+    group: quantification_options
+    help: (Weisser H. and Choudhary J.S. J Proteome Res. 2017 Aug 4)
+    hidden: false
+  mhcquant.quantification_min_prob:
+    description: Specify a cut off probability value for quantification events as
+      a filter
+    group: quantification_options
+    help: ''
+    hidden: false
+  mhcquant.allele_sheet:
+    description: Specify a .tsv file containing the MHC alleles of your probes as
+      well as their metadata such as SampleID.
+    group: mhc_affinity_prediction
+    help: '| Sample      | HLA_Alleles_Class_1                             | HLA_Alleles_Class_2                        |
+
+      | -------------| :----------------------------------------------:| ------------------------------------------:|
+
+      | MM15_Melanom | A* 03:01;A* 68:01;B* 27:05;B* 35:03;C* 02:02;C* 04:01 |HLA-DRB1*
+      01:01;HLA-DQB1* 03:19;HLA-DQA1* 05:01|
+
+      | MM17_Melanom | A* 02:01;B* 07:01;B* 26:01;C* 11:01;C* 01:01         |HLA-DRB1*
+      01:02;HLA-DRB3* 02:02;HLA-DRB4* 01:03|
+
+      '
+    hidden: false
+  mhcquant.predict_class_1:
+    description: Set flag depending on whether MHC class 1 binding predictions using
+      the tool mhcflurry should be run.
+    group: mhc_affinity_prediction
+    help: ''
+    hidden: false
+  mhcquant.predict_class_2:
+    description: Set flag depending on whether MHC class 2 binding predictions using
+      the tool mhcnuggets should be run.
+    group: mhc_affinity_prediction
+    help: ''
+    hidden: false
+  mhcquant.variant_reference:
+    description: Specify genomic reference used for variant annotation
+    group: variant_options
+    help: ''
+    hidden: false
+  mhcquant.variant_annotation_style:
+    description: Specify style of tool used for variant annotation - currently supported
+    group: variant_options
+    help: ''
+    hidden: false
+  mhcquant.variant_indel_filter:
+    description: Specify whether insertions and deletions should not be considered
+      for variant translation
+    group: variant_options
+    help: ''
+    hidden: false
+  mhcquant.variant_frameshift_filter:
+    description: Specify whether frameshifts should not be considered for variant
+      translation
+    group: variant_options
+    help: ''
+    hidden: false
+  mhcquant.variant_snp_filter:
+    description: Specify whether snps should not be considered for variant translation
+    group: variant_options
+    help: ''
+    hidden: false
+  mhcquant.predict_RT:
+    description: Set this option to predict retention times of all identified peptides
+      and possible neoepitopes based on high scoring ids
+    group: rt_prediction
+    help: ''
+    hidden: false
+  mhcquant.custom_config_version:
+    description: Git commit id for Institutional configs.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  mhcquant.skip_multiqc:
+    description: Skip MultiQC.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  mhcquant.custom_config_base:
+    description: Base directory for Institutional configs.
+    group: institutional_config_options
+    help: If you're running offline, Nextflow will not be able to fetch the institutional
+      config files from the internet. If you don't need them, then this is not a problem.
+      If you do need them, you should download the files from the repo and tell Nextflow
+      where to find them with this parameter.
+    hidden: true
+  mhcquant.config_profile_name:
+    description: Institutional config name.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  mhcquant.config_profile_description:
+    description: Institutional config description.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  mhcquant.config_profile_contact:
+    description: Institutional config contact information.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  mhcquant.config_profile_url:
+    description: Institutional config URL link.
+    group: institutional_config_options
+    help: ''
+    hidden: true
+  mhcquant.max_cpus:
+    description: Maximum number of CPUs that can be requested for any single job.
+    group: max_job_request_options
+    help: Use to set an upper-limit for the CPU requirement for each process. Should
+      be an integer e.g. `--max_cpus 1`
+    hidden: true
+  mhcquant.max_memory:
+    description: Maximum amount of memory that can be requested for any single job.
+    group: max_job_request_options
+    help: Use to set an upper-limit for the memory requirement for each process. Should
+      be a string in the format integer-unit e.g. `--max_memory '8.GB'`
+    hidden: true
+  mhcquant.max_time:
+    description: Maximum amount of time that can be requested for any single job.
+    group: max_job_request_options
+    help: Use to set an upper-limit for the time requirement for each process. Should
+      be a string in the format integer-unit e.g. `--max_time '2.h'`
+    hidden: true
+  mhcquant.help:
+    description: Display help text.
+    group: generic_options
+    help: ''
+    hidden: true
+  mhcquant.email_on_fail:
+    description: Email address for completion summary, only when pipeline fails.
+    group: generic_options
+    help: An email address to send a summary email to when the pipeline is completed
+      - ONLY sent if the pipeline does not exit successfully.
+    hidden: true
+  mhcquant.plaintext_email:
+    description: Send plain-text email instead of HTML.
+    group: generic_options
+    help: ''
+    hidden: true
+  mhcquant.max_multiqc_email_size:
+    description: File size limit when attaching MultiQC reports to summary emails.
+    group: generic_options
+    help: ''
+    hidden: true
+  mhcquant.monochrome_logs:
+    description: Do not use coloured log outputs.
+    group: generic_options
+    help: ''
+    hidden: true
+  mhcquant.multiqc_config:
+    description: Custom config file to supply to MultiQC.
+    group: generic_options
+    help: ''
+    hidden: true
+  mhcquant.tracedir:
+    description: Directory to keep pipeline Nextflow logs and reports.
+    group: generic_options
+    help: ''
+    hidden: true
+  mhcquant.validate_params:
+    description: Boolean whether to validate parameters against the schema at runtime
+    group: generic_options
+    help: ''
+    hidden: true
+  mhcquant.show_hidden_params:
+    description: Show all params when using `--help`
+    group: generic_options
+    help: By default, parameters set as _hidden_ in the schema are not shown on the
+      command line when a user runs with `--help`. Specifying this option will tell
+      the pipeline to show all parameters.
+    hidden: true
+  mhcquant.enable_conda:
+    description: Run this workflow with Conda. You can also use '-profile conda' instead
+      of providing this parameter.
+    group: generic_options
+    help: ''
+    hidden: true
+parameter_group:
+  input_output_options:
+    description: Define where the pipeline should find input data and save output
+      data.
+    help: null
+    title: Input/output options
+  database_options:
+    description: ''
+    help: null
+    title: Database Options
+  preprocessing:
+    description: ''
+    help: null
+    title: Preprocessing
+  mass_spectrometry_data_processing:
+    description: ''
+    help: null
+    title: Mass Spectrometry Data Processing
+  fdr_scoring:
+    description: ''
+    help: null
+    title: FDR Scoring
+  quantification_options:
+    description: ''
+    help: null
+    title: Quantification Options
+  mhc_affinity_prediction:
+    description: ''
+    help: null
+    title: MHC affinity prediction
+  variant_options:
+    description: ''
+    help: null
+    title: Variant Options
+  rt_prediction:
+    description: ''
+    help: null
+    title: RT Prediction
+  institutional_config_options:
+    description: Parameters used to describe centralised config profiles. These should
+      not be edited.
+    help: The centralised nf-core configuration profiles use a handful of pipeline
+      parameters to describe themselves. This information is then printed to the Nextflow
+      log when you run a pipeline. You should not need to change these values when
+      you run a pipeline.
+    title: Institutional config options
+  max_job_request_options:
+    description: Set the top limit for requested resources for any single job.
+    help: 'If you are running on a smaller system, a pipeline step requesting more
+      resources than are available may cause the Nextflow to stop the run with an
+      error. These options allow you to cap the maximum resources requested by any
+      single job so that the pipeline will run on your system.
+
+
+      Note that you can not _increase_ the resources requested by any job using these
+      options. For that you will need your own configuration file. See [the nf-core
+      website](https://nf-co.re/usage/configuration) for details.'
+    title: Max job request options
+  generic_options:
+    description: Less common options for the pipeline, typically set in a config file.
+    help: 'These options are common to all nf-core pipelines and allow you to customise
+      some of the core preferences for how the pipeline runs.
+
+
+      Typically these options would be set in a Nextflow config file loaded for all
+      pipeline runs, such as `~/.nextflow/config`.'
+    title: Generic options
