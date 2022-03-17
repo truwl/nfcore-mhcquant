@@ -1,0 +1,19 @@
+name: nf.core mhcquant
+identifier: WF_7e46ba.4f
+description: Identify and quantify MHC eluted peptides from mass spectrometry raw
+  data
+softwareVersion:
+  versionName: 2.2.0
+metadataStatus: Released
+workflowStatus: Released
+workflowFile: mhcquant.wdl
+repoName: nfcore-mhcquant
+gitTag: master
+inputsTemplate: inputs.json
+executable: true
+current: true
+codeRepository:
+  URL: https://github.com/truwl/nfcore-mhcquant/
+WebSite:
+- URL: https://github.com/nf-core/mhcquant
+  name: nf-core/mhcquant
